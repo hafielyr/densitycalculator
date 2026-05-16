@@ -32,7 +32,7 @@ function haversineMeters(lat1, lng1, lat2, lng2) {
 
 function extractCoordPairs(url) {
   // Strip the `@lat,lng,zoomz` camera token so we don't pick it up as a waypoint
-  const cleaned = url.replace(/@-?\d+\.\d+,-?\d+\.\d+,[\d.]+[az]/g, '@CAMERA');
+  const cleaned = url.replace(/@-?\d+\.\d+,-?\d+\.\d+,[\d.]+[azm]/g, '@CAMERA');
   const dir = [];
   const poi = [];
   const llRe = /[/|](-?\d{1,3}\.\d{3,}),(-?\d{1,3}\.\d{3,})/g;
