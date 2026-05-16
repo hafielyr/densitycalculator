@@ -63,6 +63,20 @@ function maxDensityCode(codes) {
   return best;
 }
 
+function majorityDensityCode(codes) {
+  const filled = codes.filter(Boolean);
+  if (!filled.length) return '';
+  const counts = {};
+  for (const c of filled) counts[c] = (counts[c] || 0) + 1;
+  let topCount = 0;
+  for (const c in counts) if (counts[c] > topCount) topCount = counts[c];
+  const winners = Object.keys(counts).filter((c) => counts[c] === topCount);
+  if (winners.length === 1) return winners[0];
+  // Tie (e.g., all three different, or 2 different with only 2 filled):
+  // break ties by the higher severity — safer default.
+  return maxDensityCode(winners);
+}
+
 function uuid() {
   if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -220,7 +234,7 @@ function app() {
     zonaList: [],
 
     config: {
-      webhookUrl: ''
+      webhookUrl: 'https://script.google.com/macros/s/AKfycbygmyqsqRfdZcJedBHuZLYlKE3ctEY9_UGTUatoSOO2yoyu2nAoIS7RS8KOfvb2ousOMA/exec'
     },
 
     form: blankForm(),
@@ -310,10 +324,12 @@ function app() {
 
     // ---------- config ----------
     async _loadConfig() {
+      const defaults = { ...this.config };
       const stored = await Config.get('config', null);
       if (stored) {
-        this.config = { ...this.config, ...stored };
+        this.config = { ...defaults, ...stored };
       }
+      if (!this.config.webhookUrl) this.config.webhookUrl = defaults.webhookUrl;
     },
 
     async saveConfig() {
@@ -435,7 +451,7 @@ function app() {
     overallDensityCode() {
       const dc = this.form.densityClasses;
       if (dc.overallOverridden && dc.overall) return dc.overall;
-      const auto = maxDensityCode([dc.d1, dc.d2, dc.d3].filter(Boolean));
+      const auto = majorityDensityCode([dc.d1, dc.d2, dc.d3]);
       return auto || dc.overall || '';
     },
 
