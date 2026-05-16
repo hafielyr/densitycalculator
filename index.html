@@ -304,13 +304,20 @@
           <span class="text-xs text-slate-500" x-show="form.photo.size" x-text="formatBytes(form.photo.size)"></span>
         </div>
         <div class="mt-2">
-          <label class="block">
-            <input type="file" accept="image/*" capture="environment" @change="onPhoto($event)" class="hidden" />
-            <span class="block w-full text-center bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-md p-6 tap cursor-pointer">
-              <span x-show="!form.photo.dataUrl">📷 Ambil Foto / Pilih</span>
-              <span x-show="form.photo.dataUrl">📷 Ganti Foto</span>
-            </span>
-          </label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="block">
+              <input type="file" accept="image/*" capture="environment" @change="onPhoto($event)" class="hidden" />
+              <span class="block w-full text-center bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-md p-4 tap cursor-pointer">
+                📷 <span class="block text-xs mt-1">Kamera</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="file" accept="image/*" @change="onPhoto($event)" class="hidden" />
+              <span class="block w-full text-center bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-md p-4 tap cursor-pointer">
+                🖼️ <span class="block text-xs mt-1">Galeri / File</span>
+              </span>
+            </label>
+          </div>
           <div x-show="form.photo.dataUrl" class="mt-2">
             <img :src="form.photo.dataUrl" class="w-full aspect-video object-cover rounded-md border border-slate-300 dark:border-slate-700" />
             <div x-show="form.photo.error" class="mt-1 text-xs text-orange-600" x-text="form.photo.error"></div>
