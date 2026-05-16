@@ -31,8 +31,8 @@ const INCIDENTS = [
 const WIZARD_QUESTIONS = [
   'Apakah ada ruang kosong antar orang yang bisa dilewati?',
   'Apakah orang masih bisa bergerak tanpa menyentuh tetangga?',
-  'Apakah bahu sudah menyentuh tetangga di kedua sisi?',
-  'Apakah orang tidak bisa angkat tangan, badan saling tekan?'
+  'Apakah bahu tidak menyentuh tetangga di kedua sisi?',
+  'Apakah orang bisa angkat tangan, badan tidak saling tekan sehingga tangan bisa diangkat?'
 ];
 
 // ----- helpers -----
