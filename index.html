@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Density Observer - Aplikasi observasi densitas untuk surveyor lapangan" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Density Observer" />
+  <title>Density Observer</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            density: {
+              L:  '#22c55e',
+              M:  '#84cc16',
+              C:  '#f59e0b',
+              D:  '#ef4444',
+              DG: '#7f1d1d'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://unpkg.com/dexie@4.0.8/dist/dexie.min.js"></script>
+  <script defer src="./db.js"></script>
+  <script defer src="./app.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+<div x-data="app()" x-init="init()" x-cloak class="min-h-screen flex flex-col">
+
+  <!-- ============ HEADER ============ -->
+  <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-screen-sm mx-auto px-3 py-2 flex items-center gap-3">
+      <button @click="view='form'"
+              class="flex items-center gap-2 font-semibold text-base">
+        <span class="inline-block w-7 h-7 rounded-md bg-indigo-600 text-white grid place-items-center text-sm">D</span>
+        <span>Density Observer</span>
+      </button>
+      <div class="ml-auto flex items-center gap-2">
+        <!-- Sync indicator -->
+        <span class="text-xs px-2 py-1 rounded-full"
+              :class="online ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
+                              : 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300'"
+              x-text="online ? 'Online' : 'Offline'"></span>
+
+        <!-- Timer badge -->
+        <button @click="timer.running ? stopTimer() : startTimer()"
+                class="font-mono text-sm px-2 py-1 rounded-md border tap"
+                :class="timer.alarm ? 'bg-red-600 text-white border-red-700 animate-pulse'
+                                     : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700'"
+                :title="timer.running ? 'Hentikan timer' : 'Mulai timer'">
+          <span x-text="timer.display"></span>
+        </button>
+
+        <button @click="goList()" class="tap p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" title="Daftar observasi">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <button @click="toggleDark()" class="tap p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle dark mode">
+          <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg x-show="dark"  xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Surveyor + Segment quick bar -->
+    <div class="max-w-screen-sm mx-auto px-3 pb-2 flex items-center gap-2 text-sm">
+      <span class="text-slate-500 dark:text-slate-400">👤</span>
+      <span class="font-medium truncate" x-text="session.surveyorName || '— pilih surveyor —'"></span>
+      <span class="text-slate-400">·</span>
+      <span class="font-medium" x-text="session.segmentCode || '—'"></span>
+      <button @click="openZoneMap()" :disabled="!session.mapsUrl"
+              class="tap inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-600 text-white text-xs font-medium disabled:opacity-40"
+              :title="session.zoneLokasi || 'Peta zona'">
+        <span>🗺️</span><span>Peta</span>
+      </button>
+      <button @click="view='settings'" class="ml-auto text-indigo-600 dark:text-indigo-400 underline tap">ubah</button>
+    </div>
+  </header>
+
+  <!-- ============ DG ALERT BANNER ============ -->
+  <div x-show="dgAlert" x-transition
+       class="bg-red-600 text-white px-3 py-2 sticky top-[88px] z-20">
+    <div class="max-w-screen-sm mx-auto flex items-center gap-3">
+      <span class="text-xl">⚠️</span>
+      <div class="flex-1">
+        <div class="font-bold">DANGEROUSLY DENSE terdeteksi</div>
+        <div class="text-sm opacity-90">Segera lapor ke Coordinator!</div>
+      </div>
+      <button @click="reportToCoordinator()" class="bg-white text-red-700 font-semibold px-3 py-1.5 rounded-md tap">Lapor</button>
+      <button @click="dgAlert=false" class="opacity-80 tap p-1">✕</button>
+    </div>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="flex-1 max-w-screen-sm mx-auto w-full px-3 py-3 pb-32">
+
+    <!-- ====== SETUP / SETTINGS ====== -->
+    <section x-show="view==='settings' || !sessionReady()" x-transition class="space-y-4">
+      <h2 class="text-lg font-semibold">Pengaturan Sesi</h2>
+
+      <div x-show="zonaInfo.event" class="rounded-md bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 p-3 text-sm">
+        <div class="font-semibold" x-text="zonaInfo.event"></div>
+        <div class="text-xs text-slate-600 dark:text-slate-300 mt-1" x-text="zonaInfo.rute"></div>
+      </div>
+
+      <label class="block">
+        <span class="text-sm font-medium">Identitas Surveyor</span>
+        <select x-model="session.surveyorId" @change="onSurveyorChange()"
+                class="w-full mt-1 rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 tap">
+          <option value="">— pilih surveyor —</option>
+          <template x-for="z in zonaList" :key="z.id">
+            <option :value="z.id" x-text="`Zona ${z.no} — ${z.surveyor}`"></option>
+          </template>
+        </select>
+        <div x-show="!zonaList.length" class="mt-2 text-xs text-orange-600">Daftar zona belum dimuat.</div>
+      </label>
+
+      <div x-show="session.surveyorId" class="rounded-md border border-slate-200 dark:border-slate-800 p-3 text-sm space-y-1">
+        <div><span class="text-slate-500">Zona:</span> <span class="font-medium" x-text="session.segmentCode"></span></div>
+        <div><span class="text-slate-500">Lokasi:</span> <span class="font-medium" x-text="session.zoneLokasi"></span></div>
+        <div class="flex gap-4">
+          <div><span class="text-slate-500">Lebar default:</span> <span class="font-mono font-medium" x-text="(session.zoneLebar ?? '—') + ' m'"></span></div>
+          <div><span class="text-slate-500">Panjang default:</span> <span class="font-mono font-medium" x-text="(session.zonePanjang ?? '—') + ' m'"></span></div>
+        </div>
+        <button @click="openZoneMap()" :disabled="!session.mapsUrl"
+                class="mt-2 inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-md tap disabled:opacity-40">
+          🗺️ <span>Buka Peta Zona</span>
+        </button>
+      </div>
+
+      <details class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <summary class="cursor-pointer font-medium">Konfigurasi (lanjutan)</summary>
+        <div class="mt-3 space-y-3 text-sm">
+          <div>
+            <label class="block font-medium mb-1">URL Google Apps Script (sinkronisasi ke Sheets)</label>
+            <input x-model="config.webhookUrl" @change="saveConfig()" placeholder="https://script.google.com/macros/s/.../exec"
+                   class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 font-mono" />
+            <p class="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+              Deploy <code>apps_script/Code.gs</code> sebagai Web App (Execute as: me, Access: Anyone) lalu tempel URL <code>/exec</code> di sini. Foto tidak dikirim — hanya tersimpan di perangkat.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <button @click="startSession()"
+              :disabled="!canStartSession()"
+              class="w-full bg-indigo-600 text-white font-semibold p-4 rounded-md tap disabled:opacity-50">
+        Mulai Sesi Observasi
+      </button>
+    </section>
+
+    <!-- ====== FORM ====== -->
+    <section x-show="view==='form' && sessionReady()" x-transition class="space-y-4">
+
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold">Observasi Baru</h2>
+      </div>
+
+      <!-- Dimensions -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <span class="font-medium text-sm">Dimensi Area</span>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="block">
+            <span class="text-xs text-slate-500">Lebar (m)</span>
+            <input type="number" inputmode="decimal" min="0.1" step="0.1" x-model.number="form.dimensions.width"
+                   class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 text-lg" />
+          </label>
+          <label class="block">
+            <span class="text-xs text-slate-500">Panjang (m)</span>
+            <input type="number" inputmode="decimal" min="0.1" step="0.1" x-model.number="form.dimensions.length"
+                   class="w-full rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 text-lg" />
+          </label>
+        </div>
+        <div x-show="isUsingZoneDefaults()" class="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+          ℹ️ Otomatis dari zona Anda — boleh diubah bila area observasi berbeda.
+        </div>
+        <div class="mt-2 text-sm">
+          <span class="text-slate-500">Luas:</span>
+          <span class="font-mono font-semibold" x-text="(area()).toFixed(2) + ' m²'"></span>
+        </div>
+      </div>
+
+      <!-- Klasifikasi Densitas (1/2/3/keseluruhan) -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3 space-y-3">
+        <span class="font-medium text-sm">Klasifikasi Densitas</span>
+
+        <template x-for="slot in [
+          { key: 'd1', label: 'Klasifikasi Densitas 1' },
+          { key: 'd2', label: 'Klasifikasi Densitas 2' },
+          { key: 'd3', label: 'Klasifikasi Densitas 3' }
+        ]" :key="slot.key">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-300" x-text="slot.label"></span>
+              <button @click="openWizard(slot.key)" type="button"
+                      class="text-[11px] bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded tap">
+                🧭 Wizard
+              </button>
+            </div>
+            <div class="mt-1.5 grid grid-cols-5 gap-1.5">
+              <template x-for="c in densityClasses" :key="slot.key + '-' + c.code">
+                <button @click="setDensity(slot.key, c.code)" type="button"
+                        class="flex flex-col items-center justify-center rounded-md p-2 text-xs font-semibold border-2 tap min-h-[64px]"
+                        :class="form.densityClasses[slot.key]===c.code
+                          ? 'ring-2 ring-offset-2 ring-indigo-500 dark:ring-offset-slate-900'
+                          : 'opacity-80'"
+                        :style="`background:${c.color}1a;border-color:${c.color};color:${c.color}`"
+                        :title="c.label">
+                  <span class="text-base" x-text="c.icon"></span>
+                  <span x-text="c.code"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Klasifikasi Densitas keseluruhan</span>
+            <div class="flex items-center gap-2">
+              <button @click="openWizard('overall')" type="button"
+                      class="text-[11px] bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded tap">
+                🧭 Wizard
+              </button>
+              <button x-show="form.densityClasses.overallOverridden" @click="clearOverallOverride()" type="button"
+                      class="text-[11px] text-slate-500 underline tap">Auto</button>
+            </div>
+          </div>
+          <div class="mt-1.5 grid grid-cols-5 gap-1.5">
+            <template x-for="c in densityClasses" :key="'overall-' + c.code">
+              <button @click="setDensity('overall', c.code)" type="button"
+                      class="flex flex-col items-center justify-center rounded-md p-2 text-xs font-semibold border-2 tap min-h-[68px]"
+                      :class="overallDensityCode()===c.code
+                        ? 'ring-2 ring-offset-2 ring-indigo-500 dark:ring-offset-slate-900'
+                        : 'opacity-80'"
+                      :style="`background:${c.color}1a;border-color:${c.color};color:${c.color}`"
+                      :title="c.label">
+                <span class="text-base" x-text="c.icon"></span>
+                <span x-text="c.code"></span>
+                <span class="font-mono mt-0.5 text-[10px] opacity-80" x-text="c.factor + '/m²'"></span>
+              </button>
+            </template>
+          </div>
+          <div class="mt-2 text-xs text-slate-500" x-show="overallDensityCode()">
+            <span x-text="densityLabel(overallDensityCode())"></span>
+            <span x-show="!form.densityClasses.overallOverridden" class="ml-2 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded">Otomatis (maks dari 1/2/3)</span>
+            <span x-show="form.densityClasses.overallOverridden" class="ml-2 px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded">Manual</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estimated people -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <div class="flex items-center justify-between">
+          <span class="font-medium text-sm">Estimasi Jumlah Orang</span>
+          <button @click="form.estimatedPeople.isOverridden=!form.estimatedPeople.isOverridden"
+                  class="text-xs text-indigo-600 dark:text-indigo-400 tap"
+                  x-text="form.estimatedPeople.isOverridden ? 'Auto' : 'Override'"></button>
+        </div>
+        <div class="mt-2 flex items-baseline gap-2">
+          <input x-show="form.estimatedPeople.isOverridden" type="number" min="0"
+                 x-model.number="form.estimatedPeople.manual"
+                 class="rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 text-2xl w-32 font-bold" />
+          <span x-show="!form.estimatedPeople.isOverridden" class="text-3xl font-bold" x-text="estPeople().value"></span>
+          <span class="text-slate-500 text-sm">orang</span>
+        </div>
+      </div>
+
+      <!-- Weather -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <span class="font-medium text-sm">Kondisi Cuaca</span>
+        <div class="mt-2 grid grid-cols-4 gap-1.5">
+          <template x-for="w in weatherOptions" :key="w.code">
+            <button @click="form.weather=w.code" type="button"
+                    class="rounded-md p-2 border-2 tap text-xs font-medium min-h-[60px] flex flex-col items-center justify-center"
+                    :class="form.weather===w.code
+                      ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30'
+                      : 'border-slate-200 dark:border-slate-700'">
+              <span class="text-xl" x-text="w.icon"></span>
+              <span x-text="w.label"></span>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Photo -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <div class="flex items-center justify-between">
+          <span class="font-medium text-sm">Foto Bukti (landscape, wajib)</span>
+          <span class="text-xs text-slate-500" x-show="form.photo.size" x-text="formatBytes(form.photo.size)"></span>
+        </div>
+        <div class="mt-2">
+          <label class="block">
+            <input type="file" accept="image/*" capture="environment" @change="onPhoto($event)" class="hidden" />
+            <span class="block w-full text-center bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-md p-6 tap cursor-pointer">
+              <span x-show="!form.photo.dataUrl">📷 Ambil Foto / Pilih</span>
+              <span x-show="form.photo.dataUrl">📷 Ganti Foto</span>
+            </span>
+          </label>
+          <div x-show="form.photo.dataUrl" class="mt-2">
+            <img :src="form.photo.dataUrl" class="w-full aspect-video object-cover rounded-md border border-slate-300 dark:border-slate-700" />
+            <div x-show="form.photo.error" class="mt-1 text-xs text-orange-600" x-text="form.photo.error"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incident -->
+      <div class="rounded-md border border-slate-200 dark:border-slate-800 p-3">
+        <span class="font-medium text-sm">Catatan Insiden</span>
+        <select x-model="form.incident.category"
+                class="w-full mt-2 rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 tap">
+          <template x-for="c in incidentCategories" :key="c">
+            <option :value="c" x-text="c"></option>
+          </template>
+        </select>
+        <textarea x-show="form.incident.category && form.incident.category!=='Tidak ada insiden'"
+                  x-model="form.incident.notes" rows="2" placeholder="Catatan tambahan…"
+                  class="w-full mt-2 rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 text-sm"></textarea>
+      </div>
+
+      <!-- Validation summary -->
+      <div x-show="validationErrors().length" class="rounded-md bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3 text-sm text-red-700 dark:text-red-300">
+        <div class="font-semibold mb-1">Belum lengkap:</div>
+        <ul class="list-disc pl-5">
+          <template x-for="e in validationErrors()" :key="e">
+            <li x-text="e"></li>
+          </template>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ====== LIST / DASHBOARD ====== -->
+    <section x-show="view==='list' && sessionReady()" x-transition class="space-y-4">
+      <h2 class="text-lg font-semibold">Observasi Hari Ini</h2>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div class="rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
+          <div class="text-xs text-slate-500">Total</div>
+          <div class="text-2xl font-bold" x-text="stats.count"></div>
+        </div>
+        <div class="rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
+          <div class="text-xs text-slate-500">Rata-rata</div>
+          <div class="text-2xl font-bold font-mono" x-text="stats.avgFactor.toFixed(2)"></div>
+        </div>
+        <div class="rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
+          <div class="text-xs text-slate-500">Total orang</div>
+          <div class="text-2xl font-bold" x-text="stats.totalPeople"></div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button @click="exportJson()" class="flex-1 bg-slate-200 dark:bg-slate-700 p-2 rounded-md tap text-sm">⬇ Export JSON</button>
+        <button @click="exportCsv()"  class="flex-1 bg-slate-200 dark:bg-slate-700 p-2 rounded-md tap text-sm">⬇ Export CSV</button>
+        <button @click="syncAll()"    class="flex-1 bg-indigo-600 text-white p-2 rounded-md tap text-sm relative" :disabled="!config.webhookUrl">
+          ↑ Sync
+          <span x-show="stats.pending > 0" class="ml-1 inline-block bg-white/20 px-1.5 py-0.5 rounded text-[10px]" x-text="stats.pending"></span>
+        </button>
+      </div>
+      <p x-show="!config.webhookUrl" class="text-xs text-orange-600 dark:text-orange-400">
+        URL Apps Script belum diset — data hanya tersimpan di perangkat ini. Atur di ⚙️ Setting.
+      </p>
+
+      <div class="space-y-2">
+        <template x-for="o in observations" :key="o.id">
+          <div class="rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-md font-bold text-white text-sm"
+                    :style="`background:${densityColor(o.densityClass)}`" x-text="o.densityClass"></span>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium truncate" x-text="o.segmentCode + ' · ' + (o.surveyorName||o.surveyorId)"></div>
+                <div class="text-xs text-slate-500" x-text="formatTime(o.timestamp) + ' · ' + (o.estimatedPeople.manual ?? o.estimatedPeople.auto) + ' org'"></div>
+              </div>
+              <span class="text-xs px-1.5 py-0.5 rounded"
+                    :class="syncBadgeClass(o.syncStatus)"
+                    x-text="syncBadgeText(o.syncStatus)"></span>
+              <button @click="deleteObs(o.id)" class="text-red-600 tap p-1" title="Hapus">🗑</button>
+            </div>
+          </div>
+        </template>
+        <div x-show="!observations.length" class="text-center text-slate-500 py-10 text-sm">Belum ada observasi hari ini.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ BOTTOM ACTION BAR ============ -->
+  <div class="fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]"
+       x-show="view==='form' && sessionReady()">
+    <div class="max-w-screen-sm mx-auto px-3 py-2 flex gap-2">
+      <button @click="resetForm()" class="px-4 py-3 rounded-md bg-slate-100 dark:bg-slate-800 tap">Reset</button>
+      <button @click="submit()"
+              :disabled="!canSubmit() || submitting"
+              class="flex-1 bg-indigo-600 text-white font-semibold py-3 rounded-md tap disabled:opacity-50">
+        <span x-show="!submitting">Simpan Observasi</span>
+        <span x-show="submitting">Menyimpan…</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ BOTTOM TAB NAV (non-form views) ============ -->
+  <nav class="fixed bottom-0 inset-x-0 z-20 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]"
+       x-show="sessionReady() && view!=='form'">
+    <div class="max-w-screen-sm mx-auto grid grid-cols-3">
+      <button @click="view='form'"     class="py-3 tap" :class="view==='form'?'text-indigo-600':'text-slate-500'"><div>📝</div><div class="text-xs">Form</div></button>
+      <button @click="goList()"        class="py-3 tap" :class="view==='list'?'text-indigo-600':'text-slate-500'"><div>📋</div><div class="text-xs">Daftar</div></button>
+      <button @click="view='settings'" class="py-3 tap" :class="view==='settings'?'text-indigo-600':'text-slate-500'"><div>⚙️</div><div class="text-xs">Setting</div></button>
+    </div>
+  </nav>
+
+  <!-- ============ DECISION TREE WIZARD ============ -->
+  <div x-show="wizard.open" x-transition.opacity
+       class="fixed inset-0 z-50 bg-black/60 grid place-items-center p-3">
+    <div class="bg-white dark:bg-slate-900 rounded-xl w-full max-w-md p-5 shadow-2xl"
+         @click.outside="wizard.open=false">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs uppercase tracking-wider text-slate-500" x-text="'Pertanyaan ' + wizard.step + ' / 4'"></span>
+        <button @click="wizard.open=false" class="tap p-1">✕</button>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6 leading-snug" x-text="wizard.questions[wizard.step-1]"></h3>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button @click="wizardAnswer('Y')"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white text-2xl font-bold py-8 rounded-lg tap">YA</button>
+        <button @click="wizardAnswer('N')"
+                class="bg-rose-600 hover:bg-rose-700 text-white text-2xl font-bold py-8 rounded-lg tap">TIDAK</button>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between text-sm">
+        <button @click="wizardBack()" :disabled="wizard.step===1" class="text-slate-500 tap disabled:opacity-30">← Kembali</button>
+        <div class="flex gap-1">
+          <template x-for="i in 4">
+            <span class="w-2 h-2 rounded-full"
+                  :class="i <= wizard.step ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'"></span>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div x-show="toast.show" x-transition
+       class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2 rounded-md shadow-lg text-sm"
+       x-text="toast.message"></div>
+
+</div>
+</body>
+</html>

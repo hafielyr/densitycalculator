@@ -1,0 +1,249 @@
+{
+  "event": "Pawai Surabaya Heritage Festival 2026",
+  "rute": "Tugu Pahlawan → Siola → Tunjungan → Grahadi → Alun-Alun Suroboyo → Bambu Runcing",
+  "total_rute_meter": 2903.8,
+  "jumlah_zona": 30,
+  "per_zona_meter": 96.8,
+  "zona": [
+    {
+      "no": 1,
+      "lokasi": "Pertigaan titik nol – ujung Gedung titik nol",
+      "surveyor": "Johanes Efata Putra Diaz P.",
+      "maps_url": "https://www.google.com/maps/dir/-7.2462009,112.7385506/-7.2471369,112.7386487/@-7.246213,112.7383696,18.82z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 104.6,
+      "lebar_m": 6
+    },
+    {
+      "no": 2,
+      "lokasi": "Ujung Gedung titik nol – sebelum simpang",
+      "surveyor": "R. Syaillindra Alfarraiel",
+      "maps_url": "https://www.google.com/maps/dir/-7.2462009,112.7385506/-7.2471369,112.7386487/@-7.246213,112.7383696,18.82z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 104.6,
+      "lebar_m": 6
+    },
+    {
+      "no": 3,
+      "lokasi": "Setelah simpang – ayam hainan",
+      "surveyor": "Muhammad Rafly Wahyudi",
+      "maps_url": "https://www.google.com/maps/place/Nasi+Ayam+Hai+Nan+(Hengky)/@-7.2474475,112.7379579,19.64z/data=!4m20!1m13!4m12!1m3!2m2!1d112.7386487!2d-7.2471369!1m6!1m2!1s0x2dd7f94022a570cf:0xc4bb52760c94c0c2!2sNasi+Ayam+Hai+Nan+(Hengky),+Jl.+Pahlawan+No.91,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174!2m2!1d112.7384731!2d-7.2476064!3e2!3m5!1s0x2dd7f94022a570cf:0xc4bb52760c94c0c2!8m2!3d-7.2476055!4d112.7384685!16s%2Fg%2F11rvz29p9?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 55.7,
+      "lebar_m": 6
+    },
+    {
+      "no": 4,
+      "lokasi": "Ayam hainan – Yayasan Jati Diri Bangsa",
+      "surveyor": "Sonya Audina Akbar",
+      "maps_url": "https://www.google.com/maps/dir/Nasi+Ayam+Hai+Nan+(Hengky),+Jl.+Pahlawan+No.91,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/Yayasan+Jati+Diri+Bangsa,+Jl.+Pahlawan+No.64,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.2484135,112.7378513,19.05z/data=!4m14!4m13!1m5!1m1!1s0x2dd7f94022a570cf:0xc4bb52760c94c0c2!2m2!1d112.7384731!2d-7.2476064!1m5!1m1!1s0x2dd7f9403b3acc61:0xc8105911bde940b2!2m2!1d112.738222!2d-7.2487793!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 133.3,
+      "lebar_m": 6
+    },
+    {
+      "no": 5,
+      "lokasi": "Yayasan Jati Diri Bangsa – SPBU",
+      "surveyor": "Mohammad Alimun Hakim",
+      "maps_url": "https://www.google.com/maps/dir/Yayasan+Jati+Diri+Bangsa,+Jl.+Pahlawan+No.64,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/-7.2498352,112.7374776/@-7.2497162,112.7370977,19.18z/data=!4m9!4m8!1m5!1m1!1s0x2dd7f9403b3acc61:0xc8105911bde940b2!2m2!1d112.738222!2d-7.2487793!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 143.3,
+      "lebar_m": 6
+    },
+    {
+      "no": 6,
+      "lokasi": "SPBU – Utama Traktor",
+      "surveyor": "Yafi Rafsanjani Hasyim",
+      "maps_url": "https://www.google.com/maps/dir/-7.2498352,112.7374776/Utama+Traktor,+Jl.+Pahlawan+No.23,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.2505112,112.736944,21z/data=!4m14!4m13!1m5!3m4!1m2!1d112.737033!2d-7.2505043!3s0x2dd7f941bbd1cdfd:0x39b280992ddeaddd!1m5!1m1!1s0x2dd7f941bb419669:0x5b61c75d5ea8567e!2m2!1d112.7369893!2d-7.2504853!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 90.1,
+      "lebar_m": 6
+    },
+    {
+      "no": 7,
+      "lokasi": "Utama Traktor – depan Milan Ceramics/taman",
+      "surveyor": "Muhammad Jazuli",
+      "maps_url": "https://www.google.com/maps/dir/Utama+Traktor,+Jl.+Pahlawan+No.23,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/MILAN+Ceramics+Gallery,+Jl.+Pahlawan+No.2,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.250771,112.7365759,18.14z/data=!4m14!4m13!1m5!1m1!1s0x2dd7f941bb419669:0x5b61c75d5ea8567e!2m2!1d112.7369893!2d-7.2504853!1m5!1m1!1s0x2dd7f94187313907:0xc5da7d8adacd3710!2m2!1d112.7369189!2d-7.251565!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 120.3,
+      "lebar_m": 6
+    },
+    {
+      "no": 8,
+      "lokasi": "Depan Milan Ceramics/taman – Citra Mebel",
+      "surveyor": "Baihaqi Nur Muhammad",
+      "maps_url": "https://www.google.com/maps/dir/MILAN+Ceramics+Gallery,+Jl.+Pahlawan+No.2,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/Citra+Mebel+%26+Furniture+Surabaya+Gemblongan,+Jl.+Gemblongan+No.71A,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.2521549,112.7341965,17z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x2dd7f94187313907:0xc5da7d8adacd3710!2m2!1d112.7369189!2d-7.251565!1m5!1m1!1s0x2dd7f9422fba06bb:0x79874598cadfab6!2m2!1d112.7365951!2d-7.252736!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 135,
+      "lebar_m": 6
+    },
+    {
+      "no": 9,
+      "lokasi": "Citra Mebel – Mebel Prima/ujung Gedung PLN",
+      "surveyor": "M. Jafier Nur Aldany",
+      "maps_url": "https://www.google.com/maps/dir/Citra+Mebel+%26+Furniture+Surabaya+Gemblongan,+Jl.+Gemblongan+No.71A,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/Mebel+Prima,+Jl.+Gemblongan+No.55,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.2531842,112.7341186,17z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x2dd7f9422fba06bb:0x79874598cadfab6!2m2!1d112.7365951!2d-7.252736!1m5!1m1!1s0x2dd7f94248d28b55:0xb6fbd3caee9f176e!2m2!1d112.7366638!2d-7.2536368!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMi4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 100.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 10,
+      "lokasi": "Mebel Prima/ujung Gedung PLN – UD. NTN Battery & Oil Supply",
+      "surveyor": "Muhammad Rudmardiansyah Pratama",
+      "maps_url": "https://www.google.com/maps/dir/Mebel+Prima,+Jl.+Gemblongan+No.55,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/ud.+NTN+Battery+%26+Oil+Supply,+Jl.+Gemblongan+No.25+-+27,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/@-7.2541391,112.7341613,17z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x2dd7f94248d28b55:0xb6fbd3caee9f176e!2m2!1d112.7366638!2d-7.2536368!1m5!1m1!1s0x2dd7f942f8777859:0x8cc83c6ec06c10ab!2m2!1d112.736683!2d-7.254655!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 113.2,
+      "lebar_m": 6
+    },
+    {
+      "no": 11,
+      "lokasi": "UD. NTN Battery & Oil Supply – sebelum simpang",
+      "surveyor": "Crisstanti Widya Lestari",
+      "maps_url": "https://www.google.com/maps/dir/ud.+NTN+Battery+%26+Oil+Supply,+Jl.+Gemblongan+No.25+-+27,+Alun-alun+Contong,+Kec.+Bubutan,+Surabaya,+Jawa+Timur+60174/-7.2556767,112.7369542/@-7.2556453,112.736846,21z/data=!4m9!4m8!1m5!1m1!1s0x2dd7f942f8777859:0x8cc83c6ec06c10ab!2m2!1d112.736683!2d-7.254655!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 117.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 12,
+      "lokasi": "Setelah simpang – depan tulisan DoubleTree",
+      "surveyor": "Aldha Nurhaliza Putri",
+      "maps_url": "https://www.google.com/maps/dir/-7.2556767,112.7369542/DoubleTree+by+Hilton+Surabaya,+Jl.+Tunjungan+No.12,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/@-7.25627,112.7345968,17z/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x2dd7f95d4adc47e7:0xb308f9396b980bb1!2m2!1d112.7370138!2d-7.2568633!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 132.1,
+      "lebar_m": 6
+    },
+    {
+      "no": 13,
+      "lokasi": "DoubleTree – Hotel Platinum",
+      "surveyor": "Salwa Zahra Rahmawati",
+      "maps_url": "https://www.google.com/maps/dir/DoubleTree+by+Hilton+Surabaya,+Jl.+Tunjungan+No.12,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/Hotel+Platinum+Tunjungan+Surabaya,+Jl.+Tunjungan+No.11+-+21,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/@-7.2571799,112.734981,17z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x2dd7f95d4adc47e7:0xb308f9396b980bb1!2m2!1d112.7370138!2d-7.2568633!1m5!1m1!1s0x2dd7f925e9ff314f:0xc89e8d87cd1ba7b9!2m2!1d112.738098!2d-7.2574373!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 135.6,
+      "lebar_m": 6
+    },
+    {
+      "no": 14,
+      "lokasi": "Hotel Platinum – Mumuso/FamilyMart",
+      "surveyor": "Haidar Adlan",
+      "maps_url": "https://www.google.com/maps/dir/Hotel+Platinum+Tunjungan+Surabaya,+Jl.+Tunjungan+No.11+-+21,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/Mumuso+Tunjungan,+Jl.+Tunjungan,+Kedungdoro,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/@-7.2578632,112.7355029,17z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x2dd7f925e9ff314f:0xc89e8d87cd1ba7b9!2m2!1d112.738098!2d-7.2574373!1m5!1m1!1s0x2dd7f900229c2c5b:0x3c31d3e78884d55b!2m2!1d112.7381491!2d-7.2582891!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 94.9,
+      "lebar_m": 6
+    },
+    {
+      "no": 15,
+      "lokasi": "Mumuso – sebelum Bank Benta",
+      "surveyor": "Farel Ilfi Rohman",
+      "maps_url": "https://www.google.com/maps/dir/FamilyMart+-+Tunjungan,+Jl.+Tunjungan+No.33,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/-7.2589416,112.7386367/@-7.2589221,112.7386568,20.41z/data=!4m9!4m8!1m5!1m1!1s0x2dd7f90000aeb8a5:0x73d06adcd9e8ebe5!2m2!1d112.7383459!2d-7.258184!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 90.1,
+      "lebar_m": 6
+    },
+    {
+      "no": 16,
+      "lokasi": "Setelah Bank Benta – sebelum Aroma Makassar",
+      "surveyor": "Fabio Arayya Pratama",
+      "maps_url": "https://www.google.com/maps/dir/-7.2589416,112.7386367/Aroma+Makassar,+Jl.+Tunjungan+No.57,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/@-7.2598289,112.738926,19.5z/data=!4m9!4m8!1m0!1m5!1m1!1s0x2dd7f9677ef0d0dd:0xd2bdbceb91d6b163!2m2!1d112.7392553!2d-7.2597541!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 113.2,
+      "lebar_m": 6
+    },
+    {
+      "no": 17,
+      "lokasi": "Setelah Aroma Makassar – ujung Gedung Majapahit",
+      "surveyor": "M. Wildan Sultansyah",
+      "maps_url": "https://www.google.com/maps/dir/Aroma+Makassar,+Jl.+Tunjungan+No.57,+Genteng,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60275/-7.2607309,112.7397118/@-7.2607562,112.7396595,20z/data=!4m9!4m8!1m5!1m1!1s0x2dd7f9677ef0d0dd:0xd2bdbceb91d6b163!2m2!1d112.7392553!2d-7.2597541!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 119.7,
+      "lebar_m": 6
+    },
+    {
+      "no": 18,
+      "lokasi": "Setelah Gedung Majapahit – gang setelah Excelso",
+      "surveyor": "Rafinda Mutiara Nurfitrianti",
+      "maps_url": "https://www.google.com/maps/dir/-7.2607309,112.7397118/-7.2614368,112.7401547/@-7.2616106,112.7401177,82m/data=!3m1!1e3!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 92.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 19,
+      "lokasi": "Gang setelah Excelso – Swiss-Belinn",
+      "surveyor": "Aurel Krisnanti Wijaya",
+      "maps_url": "https://www.google.com/maps/dir/-7.2614368,112.7401547/Swiss-Belinn+Tunjungan,+Surabaya,+Jl.+Tunjungan+No.101,+Embong+Kaliasin,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60271/@-7.2628107,112.739692,120m/data=!3m1!1e3!4m9!4m8!1m0!1m5!1m1!1s0x2dd7f960cc059bc9:0xd6d43e7b67c5de11!2m2!1d112.7408658!2d-7.2619815!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 99.1,
+      "lebar_m": 6
+    },
+    {
+      "no": 20,
+      "lokasi": "Swiss-Belinn – halte",
+      "surveyor": "Adrian Alfarisi Maulana",
+      "maps_url": "https://www.google.com/maps/dir/Swiss-Belinn+Tunjungan,+Surabaya,+Jl.+Tunjungan+No.101,+Embong+Kaliasin,+Kec.+Genteng,+Surabaya,+Jawa+Timur+60271/-7.2630154,112.7417875/@-7.2628687,112.7414811,18.91z/data=!4m9!4m8!1m5!1m1!1s0x2dd7f960cc059bc9:0xd6d43e7b67c5de11!2m2!1d112.7408658!2d-7.2619815!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 153.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 21,
+      "lokasi": "Halte – setelah Trimurti",
+      "surveyor": "Raihan Mufid",
+      "maps_url": "https://www.google.com/maps/dir/-7.2630154,112.7417875/-7.263287,112.7425873/@-7.2632606,112.7422099,19.27z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 93.2,
+      "lebar_m": 6
+    },
+    {
+      "no": 22,
+      "lokasi": "Setelah Trimurti – ujung Taman Apsara",
+      "surveyor": "Farrel Nandana Tahir",
+      "maps_url": "https://www.google.com/maps/dir/-7.263287,112.7425873/-7.2635961,112.7434142/@-7.2635411,112.7429174,18.95z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 97.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 23,
+      "lokasi": "Setelah Taman Apsara – depan SMA 6",
+      "surveyor": "Angta Faquina Bintang",
+      "maps_url": "https://www.google.com/maps/dir/-7.2635961,112.7434142/-7.2639333,112.7442892/@-7.26407,112.7435328,19.05z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 103.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 24,
+      "lokasi": "SMA 6 – setelah BNI",
+      "surveyor": "Sulaiman Abhinaya Pradipta",
+      "maps_url": "https://www.google.com/maps/dir/-7.2639333,112.7442892/-7.2642503,112.7450935/@-7.2641173,112.7445892,19z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 95.5,
+      "lebar_m": 6
+    },
+    {
+      "no": 25,
+      "lokasi": "Setelah BNI – setelah belokan, setelah mural Surabaya",
+      "surveyor": "Chalisa Kirania Putri G",
+      "maps_url": "https://www.google.com/maps/dir/-7.2642503,112.7450935/-7.264662,112.7456009/@-7.2643756,112.7450069,18.95z/data=!4m9!4m8!1m5!3m4!1m2!1d112.7455559!2d-7.264651!3s0x2dd7f9622c48581d:0xb68ea35690bc41f6!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 72.3,
+      "lebar_m": 6
+    },
+    {
+      "no": 26,
+      "lokasi": "Setelah belokan mural Surabaya – sebelum belokan pertama (Gunawangsa Group)",
+      "surveyor": "Dani Shofi Nur Izza",
+      "maps_url": "https://www.google.com/maps/dir/-7.2647034,112.7456177/-7.2655015,112.7452779/@-7.2650454,112.7451667,19.1z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 96.3,
+      "lebar_m": 6
+    },
+    {
+      "no": 27,
+      "lokasi": "Setelah belokan pertama (Gunawangsa Group) – halte",
+      "surveyor": "Muhammad Shaquille Syafiq",
+      "maps_url": "https://www.google.com/maps/dir/-7.2654576,112.7453056/Pangsud,+Embong+Kaliasin,+Kec.+Genteng,+Surabaya,+Jawa+Timur/@-7.2661171,112.7447848,19z/data=!4m9!4m8!1m0!1m5!1m1!1s0x2dd7f962027b59bf:0xc3cc3fc6141d7c8d!2m2!1d112.74505!2d-7.26634!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 102.1,
+      "lebar_m": 6
+    },
+    {
+      "no": 28,
+      "lokasi": "Halte – Telkomsel",
+      "surveyor": "Renjiro Daffarel Harsan",
+      "maps_url": "https://www.google.com/maps/dir/-7.2663311,112.7449779/-7.2670994,112.7447015/@-7.2667846,112.7442897,19z/data=!4m9!4m8!1m5!3m4!1m2!1d112.7449671!2d-7.2663595!3s0x2dd7f961ff3f0315:0x66ba2fea0f5aea6e!1m0!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 90.7,
+      "lebar_m": 6
+    },
+    {
+      "no": 29,
+      "lokasi": "Telkomsel – monumen Bambu Runcing",
+      "surveyor": "Gusti Jogishwara Adji",
+      "maps_url": "https://www.google.com/maps/dir/-7.2670994,112.7447015/-7.2680091,112.7445958/@-7.2673448,112.7435774,18.14z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 101.8,
+      "lebar_m": 6
+    },
+    {
+      "no": 30,
+      "lokasi": "Embong Ploso – depan PMI",
+      "surveyor": "M. Handika Maulana Sifa",
+      "maps_url": "https://www.google.com/maps/dir/-7.2680091,112.7445958/-7.2681821,112.745503/@-7.2682791,112.745299,20.55z/data=!4m2!4m1!3e2?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+      "panjang_m": 101.9,
+      "lebar_m": 6
+    }
+  ]
+}
