@@ -353,7 +353,18 @@
 
     <!-- ====== LIST / DASHBOARD ====== -->
     <section x-show="view==='list' && sessionReady()" x-transition class="space-y-4">
-      <h2 class="text-lg font-semibold">Observasi Hari Ini</h2>
+      <div class="flex items-center gap-2">
+        <h2 class="text-lg font-semibold flex-1">Observasi</h2>
+        <select x-model="listFilter" @change="onFilterChange()"
+                class="text-sm rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1.5 tap">
+          <option value="today">Hari ini</option>
+          <option value="7d">7 hari terakhir</option>
+          <option value="date">Tanggal tertentu…</option>
+          <option value="all">Semua</option>
+        </select>
+        <input x-show="listFilter==='date'" type="date" x-model="listFilterDate" @change="loadObservations()"
+               class="text-sm rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1.5" />
+      </div>
       <div class="grid grid-cols-3 gap-2 text-center">
         <div class="rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
           <div class="text-xs text-slate-500">Total</div>
@@ -399,7 +410,12 @@
             </div>
           </div>
         </template>
-        <div x-show="!observations.length" class="text-center text-slate-500 py-10 text-sm">Belum ada observasi hari ini.</div>
+        <div x-show="!observations.length" class="text-center text-slate-500 py-10 text-sm">
+          <template x-if="listFilter==='today'">    <span>Belum ada observasi hari ini.</span></template>
+          <template x-if="listFilter==='7d'">       <span>Tidak ada observasi dalam 7 hari terakhir.</span></template>
+          <template x-if="listFilter==='date'">     <span>Tidak ada observasi pada tanggal ini.</span></template>
+          <template x-if="listFilter==='all'">      <span>Belum ada observasi tersimpan.</span></template>
+        </div>
       </div>
     </section>
 

@@ -105,6 +105,27 @@ function todayBounds() {
   return { start: start.toISOString(), end: end.toISOString() };
 }
 
+function dayBounds(yyyyMmDd) {
+  const [y, m, d] = (yyyyMmDd || '').split('-').map(Number);
+  if (!y || !m || !d) return null;
+  const start = new Date(y, m - 1, d, 0, 0, 0, 0);
+  const end   = new Date(y, m - 1, d, 23, 59, 59, 999);
+  return { start: start.toISOString(), end: end.toISOString() };
+}
+
+function lastNDaysBounds(n) {
+  const end = new Date(); end.setHours(23, 59, 59, 999);
+  const start = new Date(); start.setDate(start.getDate() - (n - 1)); start.setHours(0, 0, 0, 0);
+  return { start: start.toISOString(), end: end.toISOString() };
+}
+
+function toLocalDateInputValue(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dd}`;
+}
+
 function compressImageFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -250,6 +271,8 @@ function app() {
     timer: { running: false, remaining: REMINDER_SECONDS, display: '30:00', alarm: false, _timeoutId: null },
 
     observations: [],
+    listFilter: 'today', // 'today' | '7d' | 'all' | 'date'
+    listFilterDate: '',
     stats: { count: 0, avgFactor: 0, totalPeople: 0, pending: 0 },
     toast: { show: false, message: '', _timeout: null },
     photoView: { open: false, dataUrl: '', title: '', filename: '' },
@@ -694,11 +717,31 @@ function app() {
       await this.loadObservations();
     },
 
+    async onFilterChange() {
+      if (this.listFilter === 'date' && !this.listFilterDate) {
+        this.listFilterDate = toLocalDateInputValue(new Date());
+      }
+      await this.loadObservations();
+    },
+
     async loadObservations() {
-      const { start, end } = todayBounds();
-      const all = await db.observations
-        .where('createdAt').between(start, end, true, true)
-        .reverse().sortBy('createdAt');
+      let all;
+      if (this.listFilter === 'all') {
+        all = await db.observations.reverse().sortBy('createdAt');
+      } else {
+        let bounds = null;
+        if (this.listFilter === '7d') bounds = lastNDaysBounds(7);
+        else if (this.listFilter === 'date') bounds = dayBounds(this.listFilterDate);
+        else bounds = todayBounds();
+        if (!bounds) {
+          this.observations = [];
+          this.stats = { count: 0, avgFactor: 0, totalPeople: 0, pending: 0 };
+          return;
+        }
+        all = await db.observations
+          .where('createdAt').between(bounds.start, bounds.end, true, true)
+          .reverse().sortBy('createdAt');
+      }
       this.observations = all;
       const count = all.length;
       const totalPeople = all.reduce((s, o) =>
