@@ -394,6 +394,7 @@
               <span class="text-xs px-1.5 py-0.5 rounded"
                     :class="syncBadgeClass(o.syncStatus)"
                     x-text="syncBadgeText(o.syncStatus)"></span>
+              <button x-show="o.photo && o.photo.dataUrl" @click="viewPhoto(o)" class="tap p-1" title="Lihat foto">🖼️</button>
               <button @click="deleteObs(o.id)" class="text-red-600 tap p-1" title="Hapus">🗑</button>
             </div>
           </div>
@@ -456,6 +457,20 @@
           </template>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ============ PHOTO VIEWER ============ -->
+  <div x-show="photoView.open" x-transition.opacity
+       class="fixed inset-0 z-50 bg-black/80 grid place-items-center p-3">
+    <div class="bg-white dark:bg-slate-900 rounded-xl w-full max-w-md p-3 shadow-2xl"
+         @click.outside="closePhotoView()">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="text-xs truncate flex-1" x-text="photoView.title"></div>
+        <button @click="downloadPhotoView()" class="tap p-1" title="Unduh">⬇</button>
+        <button @click="closePhotoView()" class="tap p-1" title="Tutup">✕</button>
+      </div>
+      <img :src="photoView.dataUrl" class="w-full rounded-md max-h-[70vh] object-contain bg-slate-100 dark:bg-slate-800" />
     </div>
   </div>
 

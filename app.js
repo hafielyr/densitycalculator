@@ -252,6 +252,7 @@ function app() {
     observations: [],
     stats: { count: 0, avgFactor: 0, totalPeople: 0, pending: 0 },
     toast: { show: false, message: '', _timeout: null },
+    photoView: { open: false, dataUrl: '', title: '', filename: '' },
 
     // ---------- lifecycle ----------
     async init() {
@@ -714,6 +715,30 @@ function app() {
       await db.observations.delete(id);
       await this.loadObservations();
       this._showToast('Dihapus');
+    },
+
+    viewPhoto(o) {
+      if (!o?.photo?.dataUrl) return this._showToast('Foto tidak tersedia');
+      this.photoView.dataUrl = o.photo.dataUrl;
+      this.photoView.title = `${o.segmentCode} · ${o.surveyorName || o.surveyorId} · ${this.formatTime(o.timestamp)}`;
+      this.photoView.filename = `foto-${o.segmentCode}-${(o.timestamp || '').replace(/[:.]/g, '-')}.jpg`;
+      this.photoView.open = true;
+    },
+
+    closePhotoView() {
+      this.photoView.open = false;
+      this.photoView.dataUrl = '';
+      this.photoView.title = '';
+      this.photoView.filename = '';
+    },
+
+    downloadPhotoView() {
+      if (!this.photoView.dataUrl) return;
+      const a = document.createElement('a');
+      a.href = this.photoView.dataUrl;
+      a.download = this.photoView.filename || 'foto.jpg';
+      document.body.appendChild(a); a.click();
+      setTimeout(() => document.body.removeChild(a), 200);
     },
 
     async exportJson() {
